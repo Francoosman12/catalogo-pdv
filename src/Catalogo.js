@@ -68,7 +68,7 @@ const Catalogo = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-center mt-8 text-gray-700">No se encontraron productos.</p>
+                    <p className="text-center mt-8 text-gray-700">Lo siento. No se encontraron productos.</p>
                 )}
             </div>
         </div>
