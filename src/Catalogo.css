@@ -87,11 +87,10 @@
     .grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
-        /* Reduce the gap between columns */
     }
 
     .producto {
-        padding: 2px;
+        padding: 6px;
     }
 
     .producto img {
@@ -99,7 +98,7 @@
     }
 
     .producto h2 {
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
 
     .producto p {
@@ -107,7 +106,7 @@
     }
 
     .producto button {
-        padding: 6px 8px;
+        padding: 6px 12px;
         font-size: 0.8em;
     }
 }

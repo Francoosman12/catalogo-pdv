@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './assets/Logo_PDV-removebg-preview.png'; // Ajusta la ruta según la ubicación exacta
 
-const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado }) => {
+const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, onCrearCatalogo, onMostrarVistaPrevia, catalogoCount }) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <a className="navbar-brand" href="/">
@@ -30,7 +30,14 @@ const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado }
                     <li className="nav-item">
                         <a className="nav-link" href="/">Opción 2</a>
                     </li>
-                    {/* Puedes reemplazar otro nav-item aquí */}
+                    <li className="nav-item">
+                        <button className="btn btn-primary me-2" onClick={onMostrarVistaPrevia}>
+                            Vista Previa
+                        </button>
+                        <button className="btn btn-primary" onClick={onCrearCatalogo}>
+                            Crear mi propio catálogo ({catalogoCount})
+                        </button>
+                    </li>
                 </ul>
             </div>
         </nav>
