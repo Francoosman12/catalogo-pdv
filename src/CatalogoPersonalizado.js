@@ -40,6 +40,13 @@ const CatalogoPersonalizado = ({ catalogoPersonal, eliminarProducto }) => {
 
                                 <p className="text-gray-600">Código: {producto.Codigo}</p>
                             </div>
+                            {/* Botón de eliminar */}
+                            <button
+                                onClick={() => eliminarProducto(producto.Codigo)} // Llama a la función eliminarProducto con el código del producto
+                                className="absolute top-0 right-0 m-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none eliminar-producto"
+                            >
+                                X
+                            </button>
                         </div>
                     ))
                 ) : (

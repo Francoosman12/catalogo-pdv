@@ -1,64 +1,69 @@
 /* CatalogoPersonalizado.css */
 
 .catalogo-personalizado {
-    max-width: 210mm;
-    /* Ancho de hoja A4 */
-    margin: 0 auto;
-    /* Centrar en la página */
-    padding: 20px;
-    /* Espaciado interior */
+    max-width: 210mm; /* Ancho de hoja A4 */
+    margin: 0 auto; /* Centrar en la página */
+    padding: 20px; /* Espaciado interior */
 }
 
 .grid {
     display: grid;
-    gap: 20px;
-    /* Espacio entre productos */
+    gap: 20px; /* Espacio entre productos */
 }
 
 .producto {
-    height: auto;
-    /* Altura automática para que se ajuste al contenido */
-    max-width: calc(100% - 2rem);
-    /* Ancho máximo del producto */
+    height: auto; /* Altura automática para que se ajuste al contenido */
+    max-width: calc(100% - 2rem); /* Ancho máximo del producto */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem;
-    margin: auto;
-    /* Centrar cada producto */
-    position: relative;
-    /* Para el botón de eliminación */
-    border: 1px solid #ccc;
-    /* Borde para delimitar los productos */
+    margin: auto; /* Centrar cada producto */
+    position: relative; /* Para el botón de eliminación */
+    border: 1px solid #ccc; /* Borde para delimitar los productos */
+    page-break-inside: avoid; /* Evitar que las cards se corten al imprimir */
 }
 
 .producto img {
     width: 100%;
-    height: 200px;
-    /* Altura fija para las imágenes */
+    height: 150px; /* Altura fija para las imágenes */
     object-fit: cover;
 }
 
+.producto .p-4 {
+    flex: 1; /* Ocupa el espacio restante */
+}
+
+.producto h2 {
+    font-size: 1rem; /* Tamaño de fuente para el título */
+    margin-bottom: 0.5rem; /* Espacio inferior del título */
+}
+
+.producto p {
+    font-size: 1rem; /* Tamaño de fuente para los párrafos */
+    color: #666; /* Color del texto */
+}
+
 .imprimir-btn {
-    display: block;
-    /* Asegura que el botón de imprimir sea visible en la vista */
+    display: block; /* Asegura que el botón de imprimir sea visible en la vista */
 }
 
 .logo {
     width: 200px;
-    height: 130px;
-
+    height: 130px; /* Tamaño del logo */
 }
 
 @media print {
     .imprimir-btn {
-        display: none !important;
-        /* Oculta el botón de imprimir en la impresión */
+        display: none !important; /* Oculta el botón de imprimir en la impresión */
+    }
+
+    .eliminar-producto{
+        display: none;
     }
 
     .producto {
-        height: auto !important;
-        /* Reestablece la altura para la impresión */
+        height: auto !important; /* Reestablece la altura para la impresión */
     }
 
     .footer {
@@ -72,9 +77,15 @@
 
     .logo {
         width: 150px;
-        height: 70px;
-        /* Tamaño del logo para impresión */
-        margin: 0 auto;
-        /* Centra el logo horizontalmente */
+        height: 70px; /* Tamaño del logo para impresión */
+        margin: 0 auto; /* Centra el logo horizontalmente */
+    }
+
+    
+
+    /* Configurar los márgenes de impresión */
+    @page {
+        margin: 0; /* Establecer márgenes mínimos o ningunos */
+        size: A4 portrait; /* Orientación de la página */
     }
 }
