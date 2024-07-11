@@ -31,9 +31,7 @@ const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, 
                         <a className="nav-link" href="/">Opción 2</a>
                     </li>
                     <li className="nav-item">
-                        <button className="btn btn-primary me-2" onClick={onMostrarVistaPrevia}>
-                            Vista Previa
-                        </button>
+
                         <button className="btn btn-primary" onClick={onCrearCatalogo}>
                             Crear mi propio catálogo ({catalogoCount})
                         </button>

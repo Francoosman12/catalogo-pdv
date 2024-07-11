@@ -1,0 +1,80 @@
+/* CatalogoPersonalizado.css */
+
+.catalogo-personalizado {
+    max-width: 210mm;
+    /* Ancho de hoja A4 */
+    margin: 0 auto;
+    /* Centrar en la página */
+    padding: 20px;
+    /* Espaciado interior */
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+    /* Espacio entre productos */
+}
+
+.producto {
+    height: auto;
+    /* Altura automática para que se ajuste al contenido */
+    max-width: calc(100% - 2rem);
+    /* Ancho máximo del producto */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: auto;
+    /* Centrar cada producto */
+    position: relative;
+    /* Para el botón de eliminación */
+    border: 1px solid #ccc;
+    /* Borde para delimitar los productos */
+}
+
+.producto img {
+    width: 100%;
+    height: 200px;
+    /* Altura fija para las imágenes */
+    object-fit: cover;
+}
+
+.imprimir-btn {
+    display: block;
+    /* Asegura que el botón de imprimir sea visible en la vista */
+}
+
+.logo {
+    width: 200px;
+    height: 130px;
+
+}
+
+@media print {
+    .imprimir-btn {
+        display: none !important;
+        /* Oculta el botón de imprimir en la impresión */
+    }
+
+    .producto {
+        height: auto !important;
+        /* Reestablece la altura para la impresión */
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-top: 0px solid #ccc;
+    }
+
+    .logo {
+        width: 150px;
+        height: 70px;
+        /* Tamaño del logo para impresión */
+        margin: 0 auto;
+        /* Centra el logo horizontalmente */
+    }
+}
