@@ -11,6 +11,7 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
     const paginationLimit = 10;
     const [showMore, setShowMore] = useState(false);
     const navigate = useNavigate();
+    const [productosSeleccionados, setProductosSeleccionados] = useState(0); // Estado para el conteo de productos seleccionados
 
     useEffect(() => {
         fetch('/productos.json')
@@ -20,6 +21,11 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
             })
             .catch((error) => console.error('Error al cargar los productos:', error));
     }, []);
+
+    const handleAgregarProducto = (producto) => {
+        agregarProductoACatalogo(producto); // Llama a la función para agregar producto al catálogo
+        setProductosSeleccionados(productosSeleccionados + 1); // Incrementa el conteo de productos seleccionados
+    };
 
     const handleBuscarProducto = (codigo) => {
         // Filtrar productos por el código ingresado
@@ -55,20 +61,20 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                 proveedorSeleccionado={proveedorSeleccionado}
                 setProveedorSeleccionado={setProveedorSeleccionado}
                 catalogoCount={catalogoPersonal.length}
-                onBuscarProducto={handleBuscarProducto} // Pasar la función de búsqueda al Navbar
-                descargarImagen={descargarImagen} // Pasar la función descargarImagen al Navbar
+                onBuscarProducto={handleBuscarProducto}
+                descargarImagen={descargarImagen}
             />
 
             <div className="flex justify-center mt-4">
                 <button
                     onClick={() => navigate('/catalogo-personalizado')}
-                    className="mt-4 px-4 py-2 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="mt-4 px-4 py-2 bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 fixed-button"
                 >
-                    Vista Previa de MI CATALOGO
+                    Vista Previa de MI CATALOGO ({productosSeleccionados})
                 </button>
             </div>
 
-            <div className="grid mt-16 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid mt-16 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"> {/* Ajustado a 4 tarjetas por fila en pantallas grandes */}
                 {currentProducts.length > 0 ? (
                     currentProducts.map((producto) => (
                         <div
@@ -110,7 +116,7 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                                 </button>
                                 <button
                                     onClick={() =>
-                                        agregarProductoACatalogo(producto)
+                                        handleAgregarProducto(producto) // Usa la función actualizada para agregar producto
                                     }
                                     className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
@@ -146,7 +152,6 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                     )}
                 </div>
             )}
-
         </div>
     );
 };
