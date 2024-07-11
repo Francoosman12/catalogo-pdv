@@ -21,6 +21,12 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
             .catch((error) => console.error('Error al cargar los productos:', error));
     }, []);
 
+    const handleBuscarProducto = (codigo) => {
+        // Filtrar productos por el código ingresado
+        const productosFiltrados = productos.filter(producto => producto.Codigo.includes(codigo));
+        setProductos(productosFiltrados);
+    };
+
     const descargarImagen = (url, nombre) => {
         const link = document.createElement('a');
         link.href = url;
@@ -49,6 +55,8 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                 proveedorSeleccionado={proveedorSeleccionado}
                 setProveedorSeleccionado={setProveedorSeleccionado}
                 catalogoCount={catalogoPersonal.length}
+                onBuscarProducto={handleBuscarProducto} // Pasar la función de búsqueda al Navbar
+                descargarImagen={descargarImagen} // Pasar la función descargarImagen al Navbar
             />
 
             <div className="flex justify-center mt-4">
