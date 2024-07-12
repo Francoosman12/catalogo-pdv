@@ -5,32 +5,46 @@ import { useNavigate } from 'react-router-dom';
 
 const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
     const [productos, setProductos] = useState([]);
+    const [productosOriginales, setProductosOriginales] = useState([]); // Estado para los productos originales
     const [proveedorSeleccionado, setProveedorSeleccionado] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 20;
     const paginationLimit = 10;
     const [showMore, setShowMore] = useState(false);
     const navigate = useNavigate();
-    const [productosSeleccionados, setProductosSeleccionados] = useState(0); // Estado para el conteo de productos seleccionados
+    const [productosSeleccionados, setProductosSeleccionados] = useState(0);
 
     useEffect(() => {
         fetch('/productos.json')
             .then((response) => response.json())
             .then((data) => {
                 setProductos(data);
+                setProductosOriginales(data); // Guarda los productos originales
             })
             .catch((error) => console.error('Error al cargar los productos:', error));
     }, []);
 
     const handleAgregarProducto = (producto) => {
-        agregarProductoACatalogo(producto); // Llama a la función para agregar producto al catálogo
-        setProductosSeleccionados(productosSeleccionados + 1); // Incrementa el conteo de productos seleccionados
+        agregarProductoACatalogo(producto);
+        setProductosSeleccionados(productosSeleccionados + 1);
     };
 
     const handleBuscarProducto = (codigo) => {
-        // Filtrar productos por el código ingresado
-        const productosFiltrados = productos.filter(producto => producto.Codigo.includes(codigo));
-        setProductos(productosFiltrados);
+        if (codigo === '') {
+            setProductos(productosOriginales); // Restablece los productos si el campo de búsqueda está vacío
+        } else {
+            const productosFiltrados = productosOriginales.filter(producto => producto.Codigo.includes(codigo));
+            setProductos(productosFiltrados);
+        }
+    };
+
+    const handleBuscarDescripcion = (descripcion) => {
+        if (descripcion === '') {
+            setProductos(productosOriginales); // Restablece los productos si el campo de búsqueda está vacío
+        } else {
+            const productosFiltrados = productosOriginales.filter(producto => producto.Articulo_descripcion.toLowerCase().includes(descripcion.toLowerCase()));
+            setProductos(productosFiltrados);
+        }
     };
 
     const descargarImagen = (url, nombre) => {
@@ -62,6 +76,7 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                 setProveedorSeleccionado={setProveedorSeleccionado}
                 catalogoCount={catalogoPersonal.length}
                 onBuscarProducto={handleBuscarProducto}
+                onBuscarDescripcion={handleBuscarDescripcion}
                 descargarImagen={descargarImagen}
             />
 
@@ -74,7 +89,7 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                 </button>
             </div>
 
-            <div className="grid mt-16 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"> {/* Ajustado a 4 tarjetas por fila en pantallas grandes */}
+            <div className="grid mt-16 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 {currentProducts.length > 0 ? (
                     currentProducts.map((producto) => (
                         <div
@@ -116,7 +131,7 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                                 </button>
                                 <button
                                     onClick={() =>
-                                        handleAgregarProducto(producto) // Usa la función actualizada para agregar producto
+                                        handleAgregarProducto(producto)
                                     }
                                     className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
@@ -142,14 +157,14 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                             {index + 1}
                         </button>
                     ))}
-                    {!showMore && (
+                    !showMore && (
                         <button
                             onClick={() => setShowMore(true)}
                             className="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
                         >
                             Ver más...
                         </button>
-                    )}
+                    ))
                 </div>
             )}
         </div>

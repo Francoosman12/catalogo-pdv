@@ -2,8 +2,19 @@ import React, { useState } from 'react';
 import logo from './assets/Logo_PDV-removebg-preview.png'; // Ajusta la ruta según la ubicación exacta
 import './Navbar.css'; // Asegúrate de importar el archivo CSS
 
-const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, onCrearCatalogo, onMostrarVistaPrevia, catalogoCount, onBuscarProducto, descargarImagen }) => {
+const Navbar = ({
+    proveedores,
+    proveedorSeleccionado,
+    setProveedorSeleccionado,
+    onCrearCatalogo,
+    onMostrarVistaPrevia,
+    catalogoCount,
+    onBuscarProducto,
+    onBuscarDescripcion,
+    descargarImagen
+}) => {
     const [codigoProducto, setCodigoProducto] = useState('');
+    const [descripcion, setDescripcion] = useState('');
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Reemplaza cualquier caracter que no sea dígito
@@ -12,6 +23,12 @@ const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, 
 
     const handleBuscarProducto = () => {
         onBuscarProducto(codigoProducto); // Llama a la función para buscar producto con el código ingresado
+    };
+
+    const handleDescripcionChange = (e) => {
+        const inputValue = e.target.value;
+        setDescripcion(inputValue);
+        onBuscarDescripcion(inputValue); // Llama a la función para buscar productos por descripción
     };
 
     return (
@@ -57,6 +74,18 @@ const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, 
                             >
                                 Buscar
                             </button>
+                        </div>
+                    </li>
+
+                    <li className="nav-item">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Buscar por descripción"
+                                value={descripcion}
+                                onChange={handleDescripcionChange}
+                            />
                         </div>
                     </li>
                 </ul>
