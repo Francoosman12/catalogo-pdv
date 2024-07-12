@@ -6,6 +6,13 @@
     padding: 20px; /* Espaciado interior */
 }
 
+.titulo{
+    background-color: #2E8B57;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .grid {
     display: grid;
     gap: 20px; /* Espacio entre productos */
@@ -52,7 +59,14 @@
     color: white;
     border-radius: 5px;
     border: 0;
-    margin: 30px;
+    margin: 15px;
+}
+.boton-de-volver{
+    background-color: #2E8B57;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    margin: 15px;
 }
 
 .logo {
@@ -86,6 +100,13 @@
         width: 150px;
         height: 70px; /* Tamaño del logo para impresión */
         margin: 0 auto; /* Centra el logo horizontalmente */
+    }
+
+    .boton-de-imprimir{
+        display: none;
+    }
+    .boton-de-volver{
+        display: none;
     }
 
     

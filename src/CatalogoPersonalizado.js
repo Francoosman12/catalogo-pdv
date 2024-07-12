@@ -1,16 +1,23 @@
 import React from 'react';
 import './CatalogoPersonalizado.css';
 import logo from './assets/Logo_PDV-removebg-preview.png'; // Ajusta la ruta según la ubicación de tu logo
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const CatalogoPersonalizado = ({ catalogoPersonal, eliminarProducto }) => {
+    const navigate = useNavigate(); // Usa useNavigate para redirigir al usuario
+
     // Función para iniciar la impresión
     const handleImprimir = () => {
+        if (catalogoPersonal.length === 0) {
+            alert('No hay productos en tu catálogo personalizado para imprimir.');
+            return;
+        }
         window.print(); // Inicia la impresión de la página
     };
 
     return (
         <div className="catalogo-personalizado">
-            <h1 className="text-center mb-4">Catálogo Personalizado</h1>
+            <h1 className="text-center mb-4 titulo">Catálogo Personalizado</h1>
             <div className="grid gap-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {catalogoPersonal.length > 0 ? (
                     catalogoPersonal.map((producto) => (
@@ -56,8 +63,14 @@ const CatalogoPersonalizado = ({ catalogoPersonal, eliminarProducto }) => {
                 )}
             </div>
 
-            {/* Botón para imprimir */}
-            <div className="flex justify-center text-center mt-4 imprimir-btn">
+            {/* Botones para imprimir y volver al catálogo */}
+            <div className="flex justify-center text-center mt-4 space-x-4">
+                <button
+                    onClick={() => navigate('/')}
+                    className="px-4 py-2 boton-de-volver"
+                >
+                    Volver al Catálogo
+                </button>
                 <button
                     onClick={handleImprimir}
                     className="px-4 py-2 boton-de-imprimir"

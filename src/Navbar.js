@@ -51,7 +51,7 @@ const Navbar = ({ proveedores, proveedorSeleccionado, setProveedorSeleccionado, 
                                 maxLength={10} // Limita la longitud del input si es necesario
                             />
                             <button
-                                className="btn btn-outline-primary"
+                                className="boton-de-buscar"
                                 type="button"
                                 onClick={handleBuscarProducto}
                             >

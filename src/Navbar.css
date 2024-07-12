@@ -25,6 +25,13 @@
     margin-right: 10px;
 }
 
+.boton-de-buscar{
+    background-color: #2E8B57;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+}
+
 /* Agrega un padding-top al body para que el contenido no quede oculto detrás del navbar */
 body {
     padding-top: 56px; /* Ajusta este valor según la altura de tu navbar */
