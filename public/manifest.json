@@ -1,19 +1,20 @@
 {
   "short_name": "Catálogo PDV",
   "name": "Descargar Catálogo en tu celular",
+  "description": "Aplicación para descargar y visualizar el catálogo de productos en tu celular.",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "logo-512.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo.png",
+      "src": "logo-512x512.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo.png",
+      "src": "logo-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -21,5 +22,6 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "portrait"
 }
