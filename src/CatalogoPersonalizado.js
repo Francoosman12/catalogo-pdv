@@ -57,12 +57,12 @@ const CatalogoPersonalizado = ({ catalogoPersonal, eliminarProducto }) => {
             </div>
 
             {/* Botón para imprimir */}
-            <div className="flex justify-center mt-4 imprimir-btn">
+            <div className="flex justify-center text-center mt-4 imprimir-btn">
                 <button
                     onClick={handleImprimir}
-                    className="px-4 py-2 bg-blue-500  rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="px-4 py-2 boton-de-imprimir"
                 >
-                    Imprimir Catálogo
+                    Imprimir Catálogo / Guardar
                 </button>
             </div>
 

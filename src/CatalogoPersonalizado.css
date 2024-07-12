@@ -47,6 +47,13 @@
 .imprimir-btn {
     display: block; /* Asegura que el botón de imprimir sea visible en la vista */
 }
+.boton-de-imprimir{
+    background-color: #2E8B57;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    margin: 30px;
+}
 
 .logo {
     width: 200px;
