@@ -157,14 +157,14 @@ const Catalogo = ({ agregarProductoACatalogo, catalogoPersonal }) => {
                             {index + 1}
                         </button>
                     ))}
-                    !showMore && (
+                     
                         <button
                             onClick={() => setShowMore(true)}
                             className="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
                         >
                             Ver más...
                         </button>
-                    ))
+                    
                 </div>
             )}
         </div>
