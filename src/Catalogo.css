@@ -3,8 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin-top: 45px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 70px;
+    
 }
 
 .grid {
@@ -14,18 +16,36 @@
     width: 100%;
     justify-content: center;
 }
-.fixed-button {
+
+.fixed-buttons-container {
     position: fixed;
-    bottom: 20px;
-    left: 50%; /* Centra horizontalmente */
-    transform: translateX(-50%); /* Centra horizontalmente */
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
     z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.fixed-button-left,
+.fixed-button-right {
     background-color: #2e8b57; /* Fondo verde */
     color: white; /* Letras blancas */
     padding: 10px 20px; /* Ajusta el padding según sea necesario */
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    margin: 10px;
+}
+
+.fixed-button-left {
+    background-color: #2e8b57; /* Fondo verde */
+}
+
+.fixed-button-right {
+    background-color: blue; /* Fondo azul */
 }
 
 .producto {
@@ -75,6 +95,56 @@
     background-color: #256947;
 }
 
+/* Estilos para el formulario de filtros */
+.filtro-formulario {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filtro-titulo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filtro-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.filtro-input,
+.filtro-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.filtro-select {
+    background-color: #fff;
+}
+
+.filtro-input::placeholder {
+    color: #999;
+}
+
+.paginacion{
+    padding-bottom: 160px;
+}
+.paginacion-boton{
+    padding: 10px;
+    margin: 2px;
+}
+
 /* Estilos para dispositivos medianos */
 @media (max-width: 1024px) {
     .grid {
@@ -88,10 +158,10 @@
         grid-template-columns: repeat(2, 1fr); /* Mostrar 2 tarjetas por fila en pantallas pequeñas */
         gap: 10px;
     }
-    .fixed-button {
+
+    .fixed-buttons-container {
         bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+        padding: 0 10px;
     }
 
     .producto {
@@ -116,6 +186,16 @@
         padding: 8px 16px;
         font-size: 0.5em;
         margin: 5px 0;
+    }
+    .filtro-form {
+        grid-template-columns: 1fr;
+    }
+
+.fixed-buttons-container {
+    margin-bottom: 70px;
+}
+    .paginacion{
+        padding-bottom: 150px;
     }
 }
 
@@ -148,6 +228,10 @@
         font-size: 0.7em; /* Reduce el tamaño de fuente */
         margin: 2px 0; /* Reduce el margen */
     }
-    
+    .fixed-buttons-container {
+        margin-bottom: 55px;
+    }
+    .paginacion{
+        padding-bottom: 100px;
+    }
 }
-

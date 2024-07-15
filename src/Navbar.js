@@ -1,36 +1,8 @@
-import React, { useState } from 'react';
-import logo from './assets/Logo_PDV-removebg-preview.png'; // Ajusta la ruta según la ubicación exacta
-import './Navbar.css'; // Asegúrate de importar el archivo CSS
+import React from 'react';
+import logo from './assets/Logo_PDV-removebg-preview.png';
+import './Navbar.css';
 
-const Navbar = ({
-    proveedores,
-    proveedorSeleccionado,
-    setProveedorSeleccionado,
-    onCrearCatalogo,
-    onMostrarVistaPrevia,
-    catalogoCount,
-    onBuscarProducto,
-    onBuscarDescripcion,
-    descargarImagen
-}) => {
-    const [codigoProducto, setCodigoProducto] = useState('');
-    const [descripcion, setDescripcion] = useState('');
-
-    const handleInputChange = (e) => {
-        const inputValue = e.target.value.replace(/\D/g, ''); // Reemplaza cualquier caracter que no sea dígito
-        setCodigoProducto(inputValue); // Actualiza el estado del código de producto
-    };
-
-    const handleBuscarProducto = () => {
-        onBuscarProducto(codigoProducto); // Llama a la función para buscar producto con el código ingresado
-    };
-
-    const handleDescripcionChange = (e) => {
-        const inputValue = e.target.value;
-        setDescripcion(inputValue);
-        onBuscarDescripcion(inputValue); // Llama a la función para buscar productos por descripción
-    };
-
+const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <a className="navbar-brand" href="/">
@@ -44,50 +16,6 @@ const Navbar = ({
                     <li className="nav-item">
                         <a className="nav-link" href="/">Home</a>
                     </li>
-                    <li className="nav-item">
-                        <select
-                            className="form-control"
-                            value={proveedorSeleccionado}
-                            onChange={(e) => setProveedorSeleccionado(e.target.value)}
-                        >
-                            <option value="">Filtrar por proveedor</option>
-                            {proveedores.map((proveedor, index) => (
-                                <option key={index} value={proveedor}>{proveedor}</option>
-                            ))}
-                        </select>
-                    </li>
-                    
-                    <li className="nav-item">
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Buscar por código"
-                                value={codigoProducto}
-                                onChange={handleInputChange}
-                                maxLength={10} // Limita la longitud del input si es necesario
-                            />
-                            <button
-                                className="boton-de-buscar"
-                                type="button"
-                                onClick={handleBuscarProducto}
-                            >
-                                Buscar
-                            </button>
-                        </div>
-                    </li>
-
-                    <li className="nav-item">
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Buscar por descripción"
-                                value={descripcion}
-                                onChange={handleDescripcionChange}
-                            />
-                        </div>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -95,3 +23,4 @@ const Navbar = ({
 };
 
 export default Navbar;
+
