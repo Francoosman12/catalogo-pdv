@@ -3,10 +3,11 @@ import './Catalogo.css';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
-const Catalogo = ({
+const Clientes = ({
     agregarProductoACatalogo,
     catalogoPersonal,
-    
+    agregarProductoAPedido,
+    pedido
 }) => {
     const [productos, setProductos] = useState([]);
     const [productosOriginales, setProductosOriginales] = useState([]);
@@ -28,11 +29,11 @@ const Catalogo = ({
             .catch((error) => console.error('Error al cargar los productos:', error));
     }, []);
 
-    const handleAgregarProducto = (producto) => {
-        agregarProductoACatalogo(producto);
+    const handleAgregarProductoPresupuesto = (producto) => {
+        if (!pedido.some((p) => p.Codigo === producto.Codigo)) {
+            agregarProductoAPedido(producto);
+        }
     };
-
-  
 
     const proveedores = [...new Set(productos.map((producto) => producto.Proveedor))];
     const rubros = [...new Set(productos.map((producto) => producto.Rubro))];
@@ -65,15 +66,6 @@ const Catalogo = ({
     const currentProducts = productos.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const descargarImagen = (url, nombre) => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = nombre;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
     const totalPages = Math.ceil(productos.length / productsPerPage);
     const renderPageNumbers = () => {
@@ -122,17 +114,15 @@ const Catalogo = ({
                 onBuscarDescripcion={(descripcion) => {
                     setDescripcion(descripcion);
                 }}
-                descargarImagen={descargarImagen}
             />
 
             <div className="fixed-buttons-container">
                 <button
-                    onClick={() => navigate('/catalogo-personalizado')}
-                    className="fixed-button-left"
+                    onClick={() => navigate('/pedido-presupuesto')}
+                    className="fixed-button-right"
                 >
-                    Ir a MI CATÁLOGO ({catalogoPersonal.length})
+                    Ver Pedido ({pedido.length})
                 </button>
-                
             </div>
 
             {/* Formulario de filtros */}
@@ -204,19 +194,11 @@ const Catalogo = ({
                                 </p>
                                 <p className="text-gray-600">Rubro: {producto.Rubro}</p>
                                 <button
-                                    onClick={() => handleAgregarProducto(producto)}
-                                    className="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-700"
+                                    type="button"
+                                    onClick={() => handleAgregarProductoPresupuesto(producto)}
+                                    className="bg-blue-500 text-white px-4 py-2 mt-2 rounded hover:bg-blue-700 ml-2"
                                 >
-                                    Agregar a Mi Catálogo
-                                </button>
-                               
-                                <button
-                                    onClick={() =>
-                                        descargarImagen(producto.Imagenes, producto.Codigo)
-                                    }
-                                    className="bg-yellow-500 text-white px-4 py-2 mt-2 rounded hover:bg-yellow-700 ml-2"
-                                >
-                                    Descargar Imagen
+                                    Agregar a Pedido
                                 </button>
                             </div>
                         </div>
@@ -231,13 +213,11 @@ const Catalogo = ({
                 {renderPageNumbers()}
             </div>
 
-            {/* Dentro de tu componente Catalogo */}
-<footer className="footer">
-    <p className="footer-text">© 2024 DevOs. Todos los derechos reservados.</p>
-</footer>
-
+            <footer className="footer">
+                <p className="footer-text">© 2024 DevOs. Todos los derechos reservados.</p>
+            </footer>
         </div>
     );
 };
 
-export default Catalogo;
+export default Clientes;

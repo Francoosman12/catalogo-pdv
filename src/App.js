@@ -1,14 +1,17 @@
+// src/App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Catalogo from './Catalogo';
 import CatalogoPersonalizado from './CatalogoPersonalizado';
 import PedidoPresupuesto from './PedidoPresupuesto';
+import Clientes from './Clientes';
+import LandingPage from './LandingPage';
 import './App.css';
 
 const App = () => {
     const [catalogoPersonal, setCatalogoPersonal] = useState([]);
     const [pedido, setPedido] = useState([]);
-    const [mensaje, setMensaje] = useState(''); // Estado para mensaje
+    const [mensaje, setMensaje] = useState(''); 
 
     const agregarProductoACatalogo = (producto) => {
         if (!catalogoPersonal.some((p) => p.Codigo === producto.Codigo)) {
@@ -35,46 +38,77 @@ const App = () => {
     };
 
     const enviarPedido = () => {
-        // Implementar lógica de envío de pedido aquí
         console.log('Pedido enviado al vendedor:', pedido);
         console.log('Mensaje incluido:', mensaje);
-        // Reiniciar estados después del envío, si es necesario
         setPedido([]);
         setMensaje('');
+    };
+
+    const ProtectedRoute = ({ element, ...rest }) => {
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        return isAuthenticated ? element : <Navigate to="/" />;
     };
 
     return (
         <Router>
             <Routes>
+                <Route path="/" element={<LandingPage />} />
                 <Route
-                    path="/"
+                    path="/catalogo"
                     element={
-                        <Catalogo
-                            agregarProductoACatalogo={agregarProductoACatalogo}
-                            agregarProductoAPedido={agregarProductoAPedido}
-                            catalogoPersonal={catalogoPersonal}
-                            pedido={pedido}
+                        <ProtectedRoute
+                            element={
+                                <Catalogo
+                                    agregarProductoACatalogo={agregarProductoACatalogo}
+                                    agregarProductoAPedido={agregarProductoAPedido}
+                                    catalogoPersonal={catalogoPersonal}
+                                    pedido={pedido}
+                                />
+                            }
                         />
                     }
                 />
                 <Route
                     path="/catalogo-personalizado"
                     element={
-                        <CatalogoPersonalizado
-                            catalogoPersonal={catalogoPersonal}
-                            eliminarProducto={eliminarProducto}
+                        <ProtectedRoute
+                            element={
+                                <CatalogoPersonalizado
+                                    catalogoPersonal={catalogoPersonal}
+                                    eliminarProducto={eliminarProducto}
+                                />
+                            }
                         />
                     }
                 />
                 <Route
                     path="/pedido-presupuesto"
                     element={
-                        <PedidoPresupuesto
-                            pedido={pedido}
-                            actualizarCantidadProducto={actualizarCantidadProducto}
-                            enviarPedido={enviarPedido}
-                            mensaje={mensaje}
-                            setMensaje={setMensaje}
+                        <ProtectedRoute
+                            element={
+                                <PedidoPresupuesto
+                                    pedido={pedido}
+                                    actualizarCantidadProducto={actualizarCantidadProducto}
+                                    enviarPedido={enviarPedido}
+                                    mensaje={mensaje}
+                                    setMensaje={setMensaje}
+                                />
+                            }
+                        />
+                    }
+                />
+                <Route
+                    path="/clientes"
+                    element={
+                        <ProtectedRoute
+                            element={
+                                <Clientes
+                                    agregarProductoACatalogo={agregarProductoACatalogo}
+                                    catalogoPersonal={catalogoPersonal}
+                                    agregarProductoAPedido={agregarProductoAPedido}
+                                    pedido={pedido}
+                                />
+                            }
                         />
                     }
                 />
