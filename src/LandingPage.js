@@ -5,27 +5,25 @@ import './LandingPage.css';
 
 const LandingPage = () => {
     const [isFormVisible, setFormVisible] = useState(false);
-    const [dni, setDni] = useState('');
-    const [numeroVendedor, setNumeroVendedor] = useState('');
+    const [usuario, setUsuario] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // Estado para la visibilidad de la contraseña
     const navigate = useNavigate();
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/data.json'); // Asegúrate de que el archivo sea accesible
-            const { Usuario, Password } = await response.json();
+            const response = await fetch('/data.json'); // Cambia el nombre del archivo si es necesario
+            const data = await response.json();
 
-            // Simulando verificación de usuario y contraseña
-            const usuarioValido = Usuario === "Catalogo.pdv";
-            const passwordValido = Password === "$p-d%v!.";
-
-            if (usuarioValido && passwordValido) {
+            // Validar el usuario y la contraseña
+            if (usuario === data.Usuario && password === data.Password) {
                 localStorage.setItem('isAuthenticated', 'true');
                 navigate('/catalogo');
                 setFormVisible(false);
-                setDni('');
-                setNumeroVendedor('');
+                setUsuario('');
+                setPassword('');
                 setError('');
             } else {
                 setError('Datos incorrectos. Por favor, verifique su usuario y contraseña.');
@@ -34,6 +32,10 @@ const LandingPage = () => {
             console.error('Error al verificar los datos:', error);
             setError('Error al verificar los datos.');
         }
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -65,20 +67,29 @@ const LandingPage = () => {
                         <label>
                             <input 
                                 type="text" 
-                                value={dni} 
-                                onChange={(e) => setDni(e.target.value)} 
+                                value={usuario} 
+                                onChange={(e) => setUsuario(e.target.value)} 
                                 placeholder='Ingresar usuario'
                                 required 
                             />
                         </label>
                         <label>
                             <input 
-                                type="password" 
-                                value={numeroVendedor} 
-                                onChange={(e) => setNumeroVendedor(e.target.value)}
+                                type={showPassword ? 'text' : 'password'} // Cambia el tipo según el estado showPassword
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder='Ingresar contraseña' 
                                 required 
                             />
+                            <input
+                                type="checkbox"
+                                id="show-password"
+                                checked={showPassword}
+                                onChange={toggleShowPassword}
+                                style={{ marginLeft: '10px' }}
+                                className='ver-contraseña'
+                            />
+                            <label htmlFor="show-password" style={{ marginLeft: '4px', color: 'grey'}}>Mostrar contraseña</label>
                         </label>
                         <button type="submit">Ingresar</button>
                         {error && <p className="error-message">{error}</p>}
