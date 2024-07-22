@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Catalogo from './Catalogo';
@@ -11,7 +12,7 @@ import './App.css';
 const App = () => {
     const [catalogoPersonal, setCatalogoPersonal] = useState([]);
     const [pedido, setPedido] = useState([]);
-    const [mensaje, setMensaje] = useState(''); 
+    const [mensaje, setMensaje] = useState('');
 
     const agregarProductoACatalogo = (producto) => {
         if (!catalogoPersonal.some((p) => p.Codigo === producto.Codigo)) {
@@ -48,65 +49,51 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route
-                    path="/catalogo"
-                    element={
-                        <ProtectedRoute
-                            element={
-                                <Catalogo
-                                    agregarProductoACatalogo={agregarProductoACatalogo}
-                                    agregarProductoAPedido={agregarProductoAPedido}
-                                    catalogoPersonal={catalogoPersonal}
-                                    pedido={pedido}
-                                />
-                            }
-                        />
-                    }
-                />
-                <Route
-                    path="/catalogo-personalizado"
-                    element={
-                        <ProtectedRoute
-                            element={
-                                <CatalogoPersonalizado
-                                    catalogoPersonal={catalogoPersonal}
-                                    eliminarProducto={eliminarProducto}
-                                />
-                            }
-                        />
-                    }
-                />
-                <Route
-                    path="/pedido-presupuesto"
-                    element={
-                        <ProtectedRoute
-                            element={
-                                <PedidoPresupuesto
-                                    pedido={pedido}
-                                    actualizarCantidadProducto={actualizarCantidadProducto}
-                                    enviarPedido={enviarPedido}
-                                    mensaje={mensaje}
-                                    setMensaje={setMensaje}
-                                />
-                            }
-                        />
-                    }
-                />
-                <Route
-                    path="/clientes"
-                    element={
-                        <ProtectedRoute
-                            element={
-                                <Clientes
-                                    agregarProductoACatalogo={agregarProductoACatalogo}
-                                    catalogoPersonal={catalogoPersonal}
-                                    agregarProductoAPedido={agregarProductoAPedido}
-                                    pedido={pedido}
-                                />
-                            }
-                        />
-                    }
-                />
+                <Route element={<ProtectedRoute />}>
+                    <Route
+                        path="/catalogo"
+                        element={
+                            <Catalogo
+                                agregarProductoACatalogo={agregarProductoACatalogo}
+                                agregarProductoAPedido={agregarProductoAPedido}
+                                catalogoPersonal={catalogoPersonal}
+                                pedido={pedido}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/catalogo-personalizado"
+                        element={
+                            <CatalogoPersonalizado
+                                catalogoPersonal={catalogoPersonal}
+                                eliminarProducto={eliminarProducto}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/pedido-presupuesto"
+                        element={
+                            <PedidoPresupuesto
+                                pedido={pedido}
+                                actualizarCantidadProducto={actualizarCantidadProducto}
+                                enviarPedido={enviarPedido}
+                                mensaje={mensaje}
+                                setMensaje={setMensaje}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/clientes"
+                        element={
+                            <Clientes
+                                agregarProductoACatalogo={agregarProductoACatalogo}
+                                catalogoPersonal={catalogoPersonal}
+                                agregarProductoAPedido={agregarProductoAPedido}
+                                pedido={pedido}
+                            />
+                        }
+                    />
+                </Route>
             </Routes>
         </Router>
     );

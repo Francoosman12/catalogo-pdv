@@ -13,14 +13,14 @@ const LandingPage = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/vendedor.json');
-            const vendedores = await response.json();
+            const response = await fetch('/data.json'); // Asegúrate de que el archivo sea accesible
+            const { Usuario, Password } = await response.json();
 
-            const vendedorValido = vendedores.some(v => 
-                v.dni === parseInt(dni) && v['numero de vendedor'] === parseInt(numeroVendedor)
-            );
+            // Simulando verificación de usuario y contraseña
+            const usuarioValido = Usuario === "Catalogo.pdv";
+            const passwordValido = Password === "$p-d%v!.";
 
-            if (vendedorValido) {
+            if (usuarioValido && passwordValido) {
                 localStorage.setItem('isAuthenticated', 'true');
                 navigate('/catalogo');
                 setFormVisible(false);
@@ -28,7 +28,7 @@ const LandingPage = () => {
                 setNumeroVendedor('');
                 setError('');
             } else {
-                setError('Datos incorrectos. Por favor, verifique su DNI y número de vendedor.');
+                setError('Datos incorrectos. Por favor, verifique su usuario y contraseña.');
             }
         } catch (error) {
             console.error('Error al verificar los datos:', error);
@@ -38,7 +38,7 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page">
-          <img 
+            <img 
                 src="/Logo_PDV-.png"
                 alt="Logo" 
                 className="landing-logo" 
@@ -63,22 +63,20 @@ const LandingPage = () => {
                     <h2>Ingreso de Vendedor</h2>
                     <form onSubmit={handleFormSubmit} className="landing-form">
                         <label>
-                            
                             <input 
-                                type="number" 
+                                type="text" 
                                 value={dni} 
                                 onChange={(e) => setDni(e.target.value)} 
-                                placeholder='Ingresar DNI'
+                                placeholder='Ingresar usuario'
                                 required 
                             />
                         </label>
                         <label>
-                        
                             <input 
-                                type="number" 
+                                type="password" 
                                 value={numeroVendedor} 
                                 onChange={(e) => setNumeroVendedor(e.target.value)}
-                                placeholder='Ingresar código de vendedor' 
+                                placeholder='Ingresar contraseña' 
                                 required 
                             />
                         </label>

@@ -1,9 +1,11 @@
+// src/ProtectedRoute.js
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = () => {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    return isAuthenticated ? element : <Navigate to="/" />;
+
+    return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default ProtectedRoute;
