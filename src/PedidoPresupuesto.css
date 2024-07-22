@@ -70,3 +70,11 @@
     background-color: #007bff;
     color: white;
 }
+.select-vendedor {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    margin-top: 10px;
+    width: 100%;
+}

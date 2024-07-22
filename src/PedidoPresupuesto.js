@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PedidoPresupuesto.css'; // Asegúrate de tener estilos adecuados
 
 const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, mensaje, setMensaje }) => {
+    const [vendedores, setVendedores] = useState([]);
+    const [selectedVendedor, setSelectedVendedor] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Cargar los datos de vendedores desde el archivo JSON
+        const loadVendedores = async () => {
+            try {
+                const response = await fetch('/vendedores.json'); // Ajusta la ruta si es necesario
+                const data = await response.json();
+                setVendedores(data);
+            } catch (error) {
+                console.error('Error al cargar los datos de vendedores:', error);
+            }
+        };
+
+        loadVendedores();
+    }, []);
+
     const handleCantidadChange = (producto, cantidad) => {
-        // Validación para asegurar que la cantidad esté entre 1 y 999
         if (cantidad === '' || (Number(cantidad) >= 1 && Number(cantidad) <= 999)) {
-            actualizarCantidadProducto(producto, Number(cantidad) || ''); // Actualiza la cantidad o borra si está vacío
+            actualizarCantidadProducto(producto, Number(cantidad) || '');
         }
     };
 
@@ -18,8 +34,13 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
     };
 
     const handleEnviarPedido = () => {
-        if (pedido.length > 0) {
-            // Construir el mensaje para el vendedor
+        if (pedido.length > 0 && selectedVendedor) {
+            const vendedor = vendedores.find(v => v.nombre === selectedVendedor);
+            if (!vendedor) {
+                alert('Vendedor seleccionado no encontrado.');
+                return;
+            }
+
             const mensajeParaVendedor = `Hola, te solicito un presupuesto para los siguientes productos:\n\n`;
             const detallesPedido = pedido.map((producto) => (
                 `Producto: ${producto.Articulo_descripcion}\n` +
@@ -29,14 +50,11 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
 
             const mensajeCompleto = encodeURIComponent(mensajeParaVendedor + detallesPedido + mensaje);
 
-            // Construir la URL de WhatsApp con el número del vendedor y el mensaje prellenado
-            const numeroVendedor = '543816436214'; // Reemplazar con el número de WhatsApp del vendedor
-            const urlWhatsApp = `https://wa.me/${numeroVendedor}?text=${mensajeCompleto}`;
+            const urlWhatsApp = `https://wa.me/${vendedor.numero}?text=${mensajeCompleto}`;
 
-            // Redirigir al usuario a WhatsApp
             window.location.href = urlWhatsApp;
         } else {
-            alert("El pedido está vacío. Añade productos al pedido antes de enviarlo.");
+            alert("El pedido está vacío o no se ha seleccionado un vendedor.");
         }
     };
 
@@ -56,8 +74,8 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                                 value={producto.cantidad || ''}
                                 onChange={(e) => handleCantidadInput(producto, e)}
                                 className="input-cantidad"
-                                min="1" // Establece el valor mínimo permitido
-                                max="999" // Establece el valor máximo permitido
+                                min="1"
+                                max="999"
                             />
                         </div>
                     </div>
@@ -70,6 +88,20 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                     placeholder="Añade un mensaje para el vendedor"
                     className="mensaje-pedido"
                 />
+                <label htmlFor="vendedor-select">Selecciona un vendedor:</label>
+                <select
+                    id="vendedor-select"
+                    value={selectedVendedor}
+                    onChange={(e) => setSelectedVendedor(e.target.value)}
+                    className="select-vendedor"
+                >
+                    <option value="">Selecciona un vendedor</option>
+                    {vendedores.map((vendedor, index) => (
+                        <option key={index} value={vendedor.nombre}>
+                            {vendedor.nombre}
+                        </option>
+                    ))}
+                </select>
                 <button onClick={handleEnviarPedido} className="btn-enviar-pedido">
                     Pedir presupuesto a mi vendedor
                 </button>
