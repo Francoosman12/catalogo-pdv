@@ -106,7 +106,7 @@
     margin-top: 10px;
 }
 
-@media (max-width: 503px) {
+@media (min-width: 1040px) {
     .landing-logo {
         width: 200px; /* Ajusta el tamaño del logo según lo necesario */
         height: auto; /* Mantiene la proporción del logo */
