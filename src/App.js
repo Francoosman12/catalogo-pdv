@@ -1,11 +1,11 @@
-// src/App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Catalogo from './Catalogo';
 import CatalogoPersonalizado from './CatalogoPersonalizado';
 import PedidoPresupuesto from './PedidoPresupuesto';
 import Clientes from './Clientes';
 import LandingPage from './LandingPage';
+import ProtectedRoute from './ProtectedRoute';
 import './App.css';
 
 const App = () => {
@@ -42,11 +42,6 @@ const App = () => {
         console.log('Mensaje incluido:', mensaje);
         setPedido([]);
         setMensaje('');
-    };
-
-    const ProtectedRoute = ({ element, ...rest }) => {
-        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        return isAuthenticated ? element : <Navigate to="/" />;
     };
 
     return (

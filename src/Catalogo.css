@@ -11,11 +11,13 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Mostrar 4 tarjetas por fila en pantallas grandes */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Usa un mínimo de ancho para las tarjetas */
     gap: 20px;
     width: 100%;
     justify-content: center;
+    margin-top: 40px;
 }
+
 
 .fixed-buttons-container {
     position: fixed;
@@ -58,15 +60,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible */
+    height: 300px; /* Ajusta la altura fija para todas las tarjetas */
+    box-sizing: border-box; /* Asegura que el padding no afecte la altura */
 }
 
 .producto img {
     max-width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 150px; /* Ajusta la altura de la imagen */
+    object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
     margin-bottom: 10px;
 }
+
 
 .producto h2 {
     font-size: 1.2em;
@@ -154,9 +158,18 @@
 
 /* Estilos para dispositivos pequeños */
 @media (max-width: 768px) {
+    
     .grid {
         grid-template-columns: repeat(2, 1fr); /* Mostrar 2 tarjetas por fila en pantallas pequeñas */
         gap: 10px;
+    }
+
+    .producto {
+        height: 250px; 
+    }
+
+    .producto img {
+        height: 120px;
     }
 
     .fixed-buttons-container {
@@ -164,13 +177,7 @@
         padding: 0 10px;
     }
 
-    .producto {
-        padding: 8px;
-    }
-
-    .producto img {
-        height: 120px;
-    }
+    
 
     .producto h2 {
         font-size: 0.5em;
@@ -206,11 +213,11 @@
     }
 
     .producto {
-        padding: 1px;
+        height: 200px; /* Ajusta la altura de la tarjeta en pantallas muy pequeñas */
     }
 
     .producto img {
-        height: 120px;
+        height: 100px;
     }
 
     .producto h2 {

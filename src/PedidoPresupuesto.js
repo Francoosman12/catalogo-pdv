@@ -7,9 +7,14 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
 
     const handleCantidadChange = (producto, cantidad) => {
         // Validación para asegurar que la cantidad esté entre 1 y 999
-        if (!isNaN(cantidad) && cantidad >= 1 && cantidad <= 999) {
-            actualizarCantidadProducto(producto, cantidad);
+        if (cantidad === '' || (Number(cantidad) >= 1 && Number(cantidad) <= 999)) {
+            actualizarCantidadProducto(producto, Number(cantidad) || ''); // Actualiza la cantidad o borra si está vacío
         }
+    };
+
+    const handleCantidadInput = (producto, event) => {
+        const value = event.target.value;
+        handleCantidadChange(producto, value);
     };
 
     const handleEnviarPedido = () => {
@@ -19,7 +24,7 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
             const detallesPedido = pedido.map((producto) => (
                 `Producto: ${producto.Articulo_descripcion}\n` +
                 `Código: ${producto.Codigo}\n` +
-                `Cantidad: ${producto.cantidad}\n\n`
+                `Cantidad: ${producto.cantidad || 'No especificada'}\n\n`
             )).join('');
 
             const mensajeCompleto = encodeURIComponent(mensajeParaVendedor + detallesPedido + mensaje);
@@ -49,10 +54,10 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                             <input
                                 type="number"
                                 value={producto.cantidad || ''}
-                                onChange={(e) => handleCantidadChange(producto, parseInt(e.target.value))}
+                                onChange={(e) => handleCantidadInput(producto, e)}
                                 className="input-cantidad"
-                                min="1"
-                                max="999" // Establece un máximo de tres cifras
+                                min="1" // Establece el valor mínimo permitido
+                                max="999" // Establece el valor máximo permitido
                             />
                         </div>
                     </div>
