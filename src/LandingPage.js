@@ -90,6 +90,12 @@ const LandingPage = () => {
                     </label>
                     <button type="submit">Ingresar</button>
                     {error && <p className="error-message">{error}</p>}
+                    <button 
+                    onClick={() => setFormVisible(false)}
+                    className="close-button"
+                >
+                    Cerrar
+                </button>
                 </form>
             </div>
         </div>

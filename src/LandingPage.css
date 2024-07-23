@@ -125,6 +125,22 @@
     margin-top: 10px;
 }
 
+.close-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.close-button:hover {
+    background-color: #ff1a1a;
+}
+
+
 @media (min-width: 1040px) {
     .landing-title {
         font-size: 2rem;
