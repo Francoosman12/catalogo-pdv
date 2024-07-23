@@ -70,7 +70,7 @@
     background-color: #007bff;
     color: white;
 }
-.select-vendedor {
+.select-provincia, .select-vendedor {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;

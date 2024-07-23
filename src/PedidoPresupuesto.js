@@ -4,6 +4,8 @@ import './PedidoPresupuesto.css'; // Asegúrate de tener estilos adecuados
 
 const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, mensaje, setMensaje }) => {
     const [vendedores, setVendedores] = useState([]);
+    const [provincias, setProvincias] = useState([]);
+    const [selectedProvincia, setSelectedProvincia] = useState('');
     const [selectedVendedor, setSelectedVendedor] = useState('');
     const navigate = useNavigate();
 
@@ -14,6 +16,10 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                 const response = await fetch('/vendedores.json'); // Ajusta la ruta si es necesario
                 const data = await response.json();
                 setVendedores(data);
+
+                // Obtener lista de provincias únicas
+                const uniqueProvincias = [...new Set(data.map(vendedor => vendedor.provincia))];
+                setProvincias(uniqueProvincias);
             } catch (error) {
                 console.error('Error al cargar los datos de vendedores:', error);
             }
@@ -41,7 +47,7 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                 return;
             }
 
-            const mensajeParaVendedor = `Hola, te solicito un presupuesto para los siguientes productos:\n\n`;
+            const mensajeParaVendedor = `Hola ${vendedor.nombre}, te solicito un presupuesto para los siguientes productos:\n\n`;
             const detallesPedido = pedido.map((producto) => (
                 `Producto: ${producto.Articulo_descripcion}\n` +
                 `Código: ${producto.Codigo}\n` +
@@ -57,6 +63,8 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
             alert("El pedido está vacío o no se ha seleccionado un vendedor.");
         }
     };
+
+    const vendedoresFiltrados = vendedores.filter(vendedor => vendedor.provincia === selectedProvincia);
 
     return (
         <div className="pedido-presupuesto">
@@ -82,26 +90,47 @@ const PedidoPresupuesto = ({ pedido, actualizarCantidadProducto, enviarPedido, m
                 ))}
             </div>
             <div className="acciones-pedido">
+                <label htmlFor="provincia-select"></label>
+                <select
+                    id="provincia-select"
+                    value={selectedProvincia}
+                    onChange={(e) => setSelectedProvincia(e.target.value)}
+                    className="select-provincia"
+                >
+                    <option value="">Selecciona una provincia</option>
+                    {provincias.map((provincia, index) => (
+                        <option key={index} value={provincia}>
+                            {provincia}
+                        </option>
+                    ))}
+                </select>
+
+                {selectedProvincia && (
+                    <>
+                        <label htmlFor="vendedor-select">Selecciona un vendedor:</label>
+                        <select
+                            id="vendedor-select"
+                            value={selectedVendedor}
+                            onChange={(e) => setSelectedVendedor(e.target.value)}
+                            className="select-vendedor"
+                        >
+                            <option value="">Selecciona un vendedor</option>
+                            {vendedoresFiltrados.map((vendedor, index) => (
+                                <option key={index} value={vendedor.nombre}>
+                                    {vendedor.nombre}
+                                </option>
+                            ))}
+                        </select>
+                    </>
+                )}
+
                 <textarea
                     value={mensaje}
                     onChange={(e) => setMensaje(e.target.value)}
                     placeholder="Añade un mensaje para el vendedor"
                     className="mensaje-pedido"
                 />
-                <label htmlFor="vendedor-select">Selecciona un vendedor:</label>
-                <select
-                    id="vendedor-select"
-                    value={selectedVendedor}
-                    onChange={(e) => setSelectedVendedor(e.target.value)}
-                    className="select-vendedor"
-                >
-                    <option value="">Selecciona un vendedor</option>
-                    {vendedores.map((vendedor, index) => (
-                        <option key={index} value={vendedor.nombre}>
-                            {vendedor.nombre}
-                        </option>
-                    ))}
-                </select>
+                
                 <button onClick={handleEnviarPedido} className="btn-enviar-pedido">
                     Pedir presupuesto a mi vendedor
                 </button>
