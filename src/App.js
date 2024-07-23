@@ -49,6 +49,14 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/clientes" element={
+                    <Clientes 
+                        agregarProductoACatalogo={agregarProductoACatalogo}
+                        catalogoPersonal={catalogoPersonal}
+                        agregarProductoAPedido={agregarProductoAPedido}
+                        pedido={pedido}
+                    />
+                } />
                 <Route element={<ProtectedRoute />}>
                     <Route
                         path="/catalogo"
@@ -79,17 +87,6 @@ const App = () => {
                                 enviarPedido={enviarPedido}
                                 mensaje={mensaje}
                                 setMensaje={setMensaje}
-                            />
-                        }
-                    />
-                    <Route
-                        path="/clientes"
-                        element={
-                            <Clientes
-                                agregarProductoACatalogo={agregarProductoACatalogo}
-                                catalogoPersonal={catalogoPersonal}
-                                agregarProductoAPedido={agregarProductoAPedido}
-                                pedido={pedido}
                             />
                         }
                     />
