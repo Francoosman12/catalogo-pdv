@@ -30,7 +30,7 @@
 .landing-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 10px;  
 }
 
 .landing-button {
@@ -44,6 +44,7 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 .landing-button:hover {
@@ -56,89 +57,8 @@
     outline: none;
 }
 
-.form-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    position: absolute; /* Posiciona el formulario absolutamente dentro del contenedor */
-    top: 50%; /* Ajusta la posición desde la parte superior */
-    left: 50%; /* Ajusta la posición desde la izquierda */
-    transform: translate(-50%, -50%); /* Centra el formulario en la pantalla */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transición para suavizar la aparición */
-    opacity: 0;
-    visibility: hidden;
-}
 
-.form-container.show {
-    opacity: 1;
-    visibility: visible;
-}
 
-.form-container h2 {
-    color: #ff7e5f;
-}
-
-.landing-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.landing-form label {
-    display: flex;
-    flex-direction: column;
-}
-
-.landing-form input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-}
-
-.landing-form button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ff7e5f;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box;
-}
-
-.landing-form button:hover {
-    background-color: #feb47b;
-}
-
-.error-message {
-    color: red;
-    margin-top: 10px;
-}
-
-.ver-contraseña {
-    margin-top: 10px;
-}
-
-.close-button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.close-button:hover {
-    background-color: #ff1a1a;
-}
 
 
 @media (min-width: 1040px) {
